@@ -32,7 +32,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          echo "Building and pushing Docker image for ${{ env }} environment..."
+          echo "Building and pushing Docker image for $env environment..."
           # Add your Docker build commands here
           # docker build -t your-docker-image:$GITHUB_SHA .
           # docker tag your-docker-image:$GITHUB_SHA your-artifactory-registry/your-docker-image:$GITHUB_SHA
