@@ -18,26 +18,23 @@ jobs:
         run: |
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
             target_branch=$(echo "${{ github.event.pull_request.base.ref }}" | awk -F/ '{print $NF}')
-            if [[ "$target_branch" == 'dev' || "$target_branch" == 'stage' || "$target_branch" == 'uat' || "$target_branch" == 'prod' ]]; then
-              echo "env=$target_branch" >> $GITHUB_ENV
-            else
-              echo "env=unknown" >> $GITHUB_ENV
-            fi
+            case $target_branch in
+              "dev" | "stage" | "uat" | "prod" )
+                echo "env=$target_branch" >> $GITHUB_ENV
+                ;;
+              *)
+                echo "env=unknown" >> $GITHUB_ENV
+                ;;
+            esac
           else
             echo "env=unknown" >> $GITHUB_ENV
           fi
-
-      - name: Set Environment Output
-        id: set_env
-        run: echo "env=${{ steps.determine_environment.outputs.env }}" >> $GITHUB_ENV
 
       - name: Build and Push Docker Image
         run: |
           echo "Building and pushing Docker image for ${{ env }} environment..."
           # Add your Docker build commands here
           # docker build -t your-docker-image:$GITHUB_SHA .
-
-          # Add your Docker push commands here
           # docker tag your-docker-image:$GITHUB_SHA your-artifactory-registry/your-docker-image:$GITHUB_SHA
           # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
           # docker push your-artifactory-registry/your-docker-image:$GITHUB_SHA
