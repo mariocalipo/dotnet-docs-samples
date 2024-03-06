@@ -24,7 +24,7 @@ jobs:
 
       - name: Push Docker Image to Artifactory
         run: |
-          echo "Pushing Docker image to Artifactory for ${{ env }} environment..."
+          echo "Pushing Docker image to Artifactory for ${{ env }} environment"
           # docker tag your-docker-image:$GITHUB_SHA your-artifactory-registry/your-docker-image:$GITHUB_SHA
           # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
           # docker push your-artifactory-registry/your-docker-image:$GITHUB_SHA
