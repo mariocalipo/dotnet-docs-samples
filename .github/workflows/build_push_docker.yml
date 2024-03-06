@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: Build and Push Docker Image
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - closed
 
 jobs:
-  build:
+  build_and_push:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,13 @@ jobs:
         id: set_env
         run: echo "env=${{ steps.determine_environment.outputs.env }}" >> $GITHUB_ENV
 
-      - name: Build Docker Image
+      - name: Build and Push Docker Image
         run: |
-          echo "Building Docker image for ${{ env }} environment"
+          echo "Building and pushing Docker image for ${{ env }} environment..."
+          # Add your Docker build commands here
           # docker build -t your-docker-image:$GITHUB_SHA .
+
+          # Add your Docker push commands here
+          # docker tag your-docker-image:$GITHUB_SHA your-artifactory-registry/your-docker-image:$GITHUB_SHA
+          # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
+          # docker push your-artifactory-registry/your-docker-image:$GITHUB_SHA
