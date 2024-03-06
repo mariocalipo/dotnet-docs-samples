@@ -1,4 +1,4 @@
-name: Build on PR Merge
+name: Build Docker Image
 
 on:
   pull_request:
@@ -15,18 +15,28 @@ jobs:
 
       - name: Determine Environment
         id: determine_environment
-        run: echo "::set-output name=env::${{ github.event_name == 'pull_request' && contains(github.event.pull_request.base.ref, 'dev') && contains(github.event.pull_request.head.ref, 'main') && 'dev' || github.event_name == 'pull_request' && contains(github.event.pull_request.base.ref, 'stage') && contains(github.event.pull_request.head.ref, 'main') && 'stage' || github.event_name == 'pull_request' && contains(github.event.pull_request.base.ref, 'uat') && contains(github.event.pull_request.head.ref, 'main') && 'uat' || github.event_name == 'pull_request' && contains(github.event.pull_request.base.ref, 'prod') && contains(github.event.pull_request.head.ref, 'main') && 'prod' || 'unknown'}}"
-
-      - name: Build and Deploy
         run: |
-          if [ "${{ steps.determine_environment.outputs.env }}" == "dev" ]; then
-            echo "Building and deploying for dev environment..."
-          elif [ "${{ steps.determine_environment.outputs.env }}" == "stage" ]; then
-            echo "Building and deploying for stage environment..."
-          elif [ "${{ steps.determine_environment.outputs.env }}" == "uat" ]; then
-            echo "Building and deploying for uat environment..."
-          elif [ "${{ steps.determine_environment.outputs.env }}" == "prod" ]; then
-            echo "Building and deploying for prod environment..."
+          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+            if [[ ${{ github.event.pull_request.base.ref }} == *'dev'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
+              echo "env=dev" >> $GITHUB_ENV
+            elif [[ ${{ github.event.pull_request.base.ref }} == *'stage'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
+              echo "env=stage" >> $GITHUB_ENV
+            elif [[ ${{ github.event.pull_request.base.ref }} == *'uat'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
+              echo "env=uat" >> $GITHUB_ENV
+            elif [[ ${{ github.event.pull_request.base.ref }} == *'prod'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
+              echo "env=prod" >> $GITHUB_ENV
+            else
+              echo "env=unknown" >> $GITHUB_ENV
+            fi
           else
-            echo "Unknown environment, skipping build and deploy."
+            echo "env=unknown" >> $GITHUB_ENV
           fi
+
+      - name: Set Environment Output
+        id: set_env
+        run: echo "env=${{ steps.determine_environment.outputs.env }}" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        run: |
+          echo "Building Docker image for ${{ env }} environment"
+          # docker build -t your-docker-image:$GITHUB_SHA .
