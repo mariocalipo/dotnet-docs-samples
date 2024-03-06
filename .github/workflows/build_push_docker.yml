@@ -17,14 +17,9 @@ jobs:
         id: determine_environment
         run: |
           if [[ ${{ github.event_name }} == 'pull_request' ]]; then
-            if [[ ${{ github.event.pull_request.base.ref }} == *'dev'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
-              echo "env=dev" >> $GITHUB_ENV
-            elif [[ ${{ github.event.pull_request.base.ref }} == *'stage'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
-              echo "env=stage" >> $GITHUB_ENV
-            elif [[ ${{ github.event.pull_request.base.ref }} == *'uat'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
-              echo "env=uat" >> $GITHUB_ENV
-            elif [[ ${{ github.event.pull_request.base.ref }} == *'prod'* && ${{ github.event.pull_request.head.ref }} == *'main'* ]]; then
-              echo "env=prod" >> $GITHUB_ENV
+            target_branch=$(echo "${{ github.event.pull_request.base.ref }}" | awk -F/ '{print $NF}')
+            if [[ "$target_branch" == 'dev' || "$target_branch" == 'stage' || "$target_branch" == 'uat' || "$target_branch" == 'prod' ]]; then
+              echo "env=$target_branch" >> $GITHUB_ENV
             else
               echo "env=unknown" >> $GITHUB_ENV
             fi
