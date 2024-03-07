@@ -1,0 +1,23 @@
+name: Build and Push Docker Image - uat
+
+on:
+  push:
+    branches:
+      - uat
+
+jobs:
+  build_and_push_uat:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Docker Image - uat
+        run: |
+          echo "Building and pushing Docker image for uat environment..."
+          # Add your Docker build commands here for the uat environment
+          # docker build -t your-docker-image:uat-$GITHUB_SHA .
+          # docker tag your-docker-image:uat-$GITHUB_SHA your-artifactory-registry/your-docker-image:uat-$GITHUB_SHA
+          # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
+          # docker push your-artifactory-registry/your-docker-image:uat-$GITHUB_SHA

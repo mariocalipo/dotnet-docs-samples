@@ -1,0 +1,23 @@
+name: Build and Push Docker Image - prod
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  build_and_push_prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Docker Image - prod
+        run: |
+          echo "Building and pushing Docker image for prod environment..."
+          # Add your Docker build commands here for the prod environment
+          # docker build -t your-docker-image:prod-$GITHUB_SHA .
+          # docker tag your-docker-image:prod-$GITHUB_SHA your-artifactory-registry/your-docker-image:prod-$GITHUB_SHA
+          # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
+          # docker push your-artifactory-registry/your-docker-image:prod-$GITHUB_SHA
