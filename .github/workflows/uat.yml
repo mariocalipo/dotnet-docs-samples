@@ -1,7 +1,9 @@
 name: Build and Push Docker Image - uat
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - uat
 
