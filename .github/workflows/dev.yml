@@ -22,6 +22,9 @@ jobs:
           # Generate a unique tag using the pull request number and GitHub SHA
           PR_NUMBER=$(echo "${{ github.event.pull_request.number }}")
           TAG="dev-pr-${PR_NUMBER}-${GITHUB_SHA}"
+
+          # Navigate to the netcore folder
+          cd netcore
           
           # Build the Docker image with the generated tag
           docker build -t dotnetapp:$TAG .
