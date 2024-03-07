@@ -1,0 +1,23 @@
+name: Build and Push Docker Image - Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build_and_push_dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Docker Image - Dev
+        run: |
+          echo "Building and pushing Docker image for dev environment..."
+          # Add your Docker build commands here for the dev environment
+          # docker build -t your-docker-image:dev-$GITHUB_SHA .
+          # docker tag your-docker-image:dev-$GITHUB_SHA your-artifactory-registry/your-docker-image:dev-$GITHUB_SHA
+          # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
+          # docker push your-artifactory-registry/your-docker-image:dev-$GITHUB_SHA

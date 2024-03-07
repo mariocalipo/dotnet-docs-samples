@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package utilities;
-option java_outer_classname = "StateProto";
-
-message State {
-  string name = 1;
-  string post_abbr = 2;
-}
