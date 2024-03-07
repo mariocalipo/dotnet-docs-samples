@@ -1,8 +1,0 @@
-runtime: aspnetcore
-env: flex
-
-runtime_config:
-  operating_system: ubuntu22
-
-env_variables:
-  GA_TRACKING_ID: your-analytics-tracking-id
