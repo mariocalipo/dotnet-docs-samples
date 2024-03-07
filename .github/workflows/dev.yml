@@ -33,7 +33,7 @@ jobs:
           IMAGE_NAME: mariocalipo.jfrog.io/mariocalipo-docker/image-dev
         run: |
           cd netcore
-          TAG="-${PR_NUMBER}-${GITHUB_SHA_SHORT}"
+          TAG="${PR_NUMBER}"
           IMAGE_NAME_WITH_TAG="$IMAGE_NAME:$TAG"
           jf docker build -t $IMAGE_NAME_WITH_TAG .
           jf docker push $IMAGE_NAME_WITH_TAG
