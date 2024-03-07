@@ -1,7 +1,9 @@
 name: Build and Push Docker Image - stage
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - stage
 
