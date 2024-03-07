@@ -1,0 +1,23 @@
+name: Build and Push Docker Image - stage
+
+on:
+  push:
+    branches:
+      - stage
+
+jobs:
+  build_and_push_stage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Docker Image - stage
+        run: |
+          echo "Building and pushing Docker image for stage environment..."
+          # Add your Docker build commands here for the stage environment
+          # docker build -t your-docker-image:stage-$GITHUB_SHA .
+          # docker tag your-docker-image:stage-$GITHUB_SHA your-artifactory-registry/your-docker-image:stage-$GITHUB_SHA
+          # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
+          # docker push your-artifactory-registry/your-docker-image:stage-$GITHUB_SHA
