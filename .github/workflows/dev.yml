@@ -1,4 +1,4 @@
-name: Build and Push Docker Image - Dev
+name: Build and Push Docker Image - dev
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Build and Push Docker Image - Dev
+      - name: Build and Push Docker Image - dev
         run: |
           echo "Building and pushing Docker image for dev environment..."
           # Add your Docker build commands here for the dev environment
