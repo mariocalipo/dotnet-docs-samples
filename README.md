@@ -1,43 +1,11 @@
-# Google Cloud Platform .NET Docs Samples
+# ASP.NET on Google Cloud
 
-A collection of samples that demonstrate how to call some
-Google Cloud services from C#.
+This folder contains sample ASP.NET applications:
 
-The [APIs and .NET Libraries page](https://cloud.google.com/dotnet/docs/apis)
-lists all the _Cloud_ APIs you can call from .NET.
+* [`net4/`](net4/) contains a ASP.NET MVC 5 application that can be run in IIS on Windows. 
+* [`netcore/`](netcore/) contains a ASP.NET MVC Core application that can be run on Linux or Windows.
 
-The samples in this repo cover only _some_ of the total APIs that you can call from .NET.
+## License
 
-## Google Cloud Samples
-
-You can also browse these samples, and more in [Google Cloud Samples](https://cloud.google.com/docs/samples).
-
-
-## Build and Run
-
-To build and run a sample, open the solution file (.sln) with Visual
-Studio 2017 or later and build it.
-
-But no sample will work until you 
-
-1.  **Follow the set-up instructions in [the documentation](https://cloud.google.com/dotnet/docs/setup).**
-
-6.  **Download or clone this repo** with
-    ```sh
-    git clone https://github.com/GoogleCloudPlatform/dotnet-docs-samples
-    ```
-    Browse the directories, find a solution (.sln) file, open it with
-    [Visual Studio 2017](https://www.visualstudio.com/) or later, and run it!
-
-
-## Contributing changes
-
-* See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## Licensing
-
-* See [LICENSE](LICENSE)
-
-## Testing
-
-* See [TESTING.md](TESTING.md)
+All files in this repository are under the
+[Apache License, Version 2.0](LICENSE.txt) unless noted otherwise.

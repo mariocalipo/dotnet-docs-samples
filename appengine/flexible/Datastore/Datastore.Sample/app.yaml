@@ -1,8 +1,0 @@
-﻿runtime: aspnetcore
-env: flex
-
-runtime_config:
-  operating_system: ubuntu22
-
-env_variables:
-  GOOGLE_PROJECT_ID: your-project-id
