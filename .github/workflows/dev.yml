@@ -15,6 +15,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Build and Publish Solution
+        run: |
+          cd netcore
+          dotnet publish -c Release
+
       - name: Build Docker Image - dev
         run: |
           echo "Building Docker image for dev environment"
@@ -25,7 +30,7 @@ jobs:
 
           # Navigate to the netcore folder
           cd netcore
-          
+
           # Build the Docker image with the generated tag
           docker build -t dotnetapp:$TAG .
   
