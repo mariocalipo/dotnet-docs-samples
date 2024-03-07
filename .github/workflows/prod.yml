@@ -8,18 +8,43 @@ on:
       - prod
 
 jobs:
-  build_and_push_prod:
+  build_prod:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Build and Push Docker Image - prod
+      - name: Build and Publish Solution
         run: |
-          echo "Building and pushing Docker image for prod environment..."
-          # Add your Docker build commands here for the prod environment
-          # docker build -t your-docker-image:prod-$GITHUB_SHA .
-          # docker tag your-docker-image:prod-$GITHUB_SHA your-artifactory-registry/your-docker-image:prod-$GITHUB_SHA
+          cd netcore
+          dotnet publish -c Release
+
+      - name: Build Docker Image - prod
+        run: |
+          echo "Building Docker image for prod environment"
+          
+          # Generate a unique tag using the pull request number and GitHub SHA
+          PR_NUMBER=$(echo "${{ github.event.pull_request.number }}")
+          TAG="prod-pr-${PR_NUMBER}-${GITHUB_SHA}"
+
+          # Navigate to the netcore folder
+          cd netcore
+
+          # Build the Docker image with the generated tag
+          docker build -t dotnetapp:$TAG .
+  
+  push_prod:
+    runs-on: ubuntu-latest
+
+    needs: build_prod
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Push Docker Image - prod
+        run: |
+          echo "Pushing Docker image for prod environment"
           # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
           # docker push your-artifactory-registry/your-docker-image:prod-$GITHUB_SHA
