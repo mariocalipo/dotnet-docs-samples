@@ -58,10 +58,6 @@ jobs:
           wget https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 -O /usr/local/bin/argocd
           chmod +x /usr/local/bin/argocd
 
-      - name: Set ArgoCD Server Address
-        run: |
-          export ARGOCD_SERVER=argocd-server.argocd.svc
-        
       - name: Trigger ArgoCD Sync for Dev
         run: |
-          argocd app sync dev-application --server $ARGOCD_SERVER
+          argocd app sync dev-application --server argocd-server.argocd.svc
