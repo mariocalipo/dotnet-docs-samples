@@ -60,4 +60,4 @@ jobs:
 
       - name: Trigger ArgoCD Sync for Dev
         run: |
-          argocd app sync dev-application --server 35.238.74.229
+          argocd app sync dev-application --server 35.238.74.229 --insecure
