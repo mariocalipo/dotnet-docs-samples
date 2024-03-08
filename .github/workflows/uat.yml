@@ -8,7 +8,7 @@ on:
       - uat
 
 jobs:
-  build_uat:
+  build_push_uat:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,32 +19,36 @@ jobs:
         run: |
           cd netcore
           dotnet publish -c Release
-
-      - name: Build Docker Image - uat
-        run: |
-          echo "Building Docker image for uat environment"
-          
-          # Generate a unique tag using the pull request number and GitHub SHA
-          PR_NUMBER=$(echo "${{ github.event.pull_request.number }}")
-          TAG="uat-pr-${PR_NUMBER}-${GITHUB_SHA}"
-
-          # Navigate to the netcore folder
-          cd netcore
-
-          # Build the Docker image with the generated tag
-          docker build -t dotnetapp:$TAG .
+      
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v3
+        env:
+          JF_URL: ${{ secrets.JF_URL }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
   
-  push_uat:
-    runs-on: ubuntu-latest
-
-    needs: build_uat
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Push Docker Image - uat
+      - name: Build Tag and Push Docker Image
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_SHA_SHORT: ${{ github.sha }}
+          IMAGE_NAME: mariocalipo.jfrog.io/mariocalipo-docker/image-uat
         run: |
-          echo "Pushing Docker image for uat environment"
-          # docker login -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD your-artifactory-registry
-          # docker push your-artifactory-registry/your-docker-image:uat-$GITHUB_SHA
+          cd netcore
+          TAG="${PR_NUMBER}"
+          IMAGE_NAME_WITH_TAG="$IMAGE_NAME:$TAG"
+          jf docker build -t $IMAGE_NAME_WITH_TAG .
+          jf docker push $IMAGE_NAME_WITH_TAG
+          
+      - name: Publish Build info With JFrog CLI
+        env:
+          # Generated and maintained by GitHub
+          JFROG_CLI_BUILD_NAME: jfrog-docker-build-uat
+          # JFrog organization secret
+          JFROG_CLI_BUILD_NUMBER : ${{ github.run_number }}
+        run: |
+          # Export the build name and build nuber
+          # Collect environment variables for the build
+          jf rt build-collect-env
+          # Collect VCS details from git and add them to the build
+          jf rt build-add-git
+          # Publish build info
+          jf rt build-publish       
