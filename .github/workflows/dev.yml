@@ -52,12 +52,3 @@ jobs:
           jf rt build-add-git
           # Publish build info
           jf rt build-publish       
-
-      - name: Install ArgoCD CLI
-        run: |
-          wget https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 -O /usr/local/bin/argocd
-          chmod +x /usr/local/bin/argocd
-
-      - name: Trigger ArgoCD Sync for Dev
-        run: |
-          argocd app sync dev-application --server 35.238.74.229 --insecure
