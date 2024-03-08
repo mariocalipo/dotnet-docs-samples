@@ -52,3 +52,7 @@ jobs:
           jf rt build-add-git
           # Publish build info
           jf rt build-publish       
+
+      - name: Trigger ArgoCD Sync for dev
+        run: |
+          argocd app sync dev-application
