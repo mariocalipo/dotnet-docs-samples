@@ -50,7 +50,7 @@ jobs:
           jf docker tag $IMAGE_NAME_WITH_TAG $LATEST_IMAGE_NAME
 
           # Push the 'latest' tag
-          jf docker push $LATEST_IMAGE_NAME
+          jf docker push --force $LATEST_IMAGE_NAME
           
       - name: Publish Build info With JFrog CLI
         env:
