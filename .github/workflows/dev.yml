@@ -43,6 +43,9 @@ jobs:
           # Push the tagged image
           jf docker push $IMAGE_NAME_WITH_TAG
           
+          # Delete the existing 'latest' tag (assuming the image already exists)
+          jf rt delete $LATEST_IMAGE_NAME --quiet
+          
           # Tag the Docker image with 'latest'
           jf docker tag $IMAGE_NAME_WITH_TAG $LATEST_IMAGE_NAME
 
