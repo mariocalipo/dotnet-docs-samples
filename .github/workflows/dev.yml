@@ -43,11 +43,11 @@ jobs:
           # Push the tagged image
           jf docker push $IMAGE_NAME_WITH_TAG
           
+          # Tag the Docker image with 'latest' (before deleting existing 'latest' tag)
+          jf docker tag $IMAGE_NAME_WITH_TAG $LATEST_IMAGE_NAME
+          
           # Delete the existing 'latest' tag (assuming the image already exists)
           jf rt delete $LATEST_IMAGE_NAME --quiet
-          
-          # Tag the Docker image with 'latest'
-          jf docker tag $IMAGE_NAME_WITH_TAG $LATEST_IMAGE_NAME
           
           # Push the 'latest' tag
           jf docker push $LATEST_IMAGE_NAME
@@ -57,7 +57,7 @@ jobs:
           # Generated and maintained by GitHub
           JFROG_CLI_BUILD_NAME: jfrog-docker-build-dev
           # JFrog organization secret
-          JFROG_CLI_BUILD_NUMBER : ${{ github.run_number }}
+          JFROG_CLI_BUILD_NUMBER: ${{ github.run_number }}
         run: |
           # Export the build name and build number
           # Collect environment variables for the build
