@@ -24,7 +24,7 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v3
         env:
           JF_URL: ${{ secrets.JF_URL }}
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+          JF_ACCESS_TOKEN_ADMIN: ${{ secrets.JF_ACCESS_TOKEN_ADMIN }}
   
       - name: Build and Push Docker Image
         env:
@@ -43,12 +43,9 @@ jobs:
           # Push the tagged image
           jf docker push $IMAGE_NAME_WITH_TAG
           
-          # Tag the Docker image with 'latest' (before deleting existing 'latest' tag)
+          # Tag the Docker image with 'latest'
           jf docker tag $IMAGE_NAME_WITH_TAG $LATEST_IMAGE_NAME
-          
-          # Delete the existing 'latest' tag (assuming the image already exists)
-          jf rt delete $LATEST_IMAGE_NAME --quiet
-          
+
           # Push the 'latest' tag
           jf docker push $LATEST_IMAGE_NAME
           
