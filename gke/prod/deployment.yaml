@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
       - name: prodapp
-        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-dev:latest
+        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-prod:latest
         ports:
           - containerPort: 8080
         livenessProbe:      # Used by deployment controller
