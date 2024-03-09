@@ -35,12 +35,15 @@ jobs:
           cd netcore
           TAG="${PR_NUMBER}"
           IMAGE_NAME_WITH_TAG="$IMAGE_NAME:$TAG"
+          LATEST_IMAGE_NAME="$IMAGE_NAME:latest"
           
           # Build and tag the Docker image
           jf docker build -t $IMAGE_NAME_WITH_TAG .
-          
+          jf docker build -t $LATEST_IMAGE_NAME .
+
           # Push the tagged image
           jf docker push $IMAGE_NAME_WITH_TAG
+          jf docker push $LATEST_IMAGE_NAME
           
       - name: Publish Build info With JFrog CLI
         env:
