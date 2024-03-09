@@ -62,7 +62,7 @@ spec:
     spec:
       containers:
       - name: stageapp
-        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-dev:latest
+        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-stage:latest
         ports:
           - containerPort: 8080
         livenessProbe:      # Used by deployment controller
