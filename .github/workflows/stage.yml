@@ -24,9 +24,9 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v3
         env:
           JF_URL: ${{ secrets.JF_URL }}
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN_ADMIN }}
   
-      - name: Build Tag and Push Docker Image
+      - name: Build and Push Docker Image
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_SHA_SHORT: ${{ github.sha }}
@@ -35,20 +35,27 @@ jobs:
           cd netcore
           TAG="${PR_NUMBER}"
           IMAGE_NAME_WITH_TAG="$IMAGE_NAME:$TAG"
+          LATEST_IMAGE_NAME="$IMAGE_NAME:latest"
+          
+          # Build and tag the Docker image
           jf docker build -t $IMAGE_NAME_WITH_TAG .
+          jf docker build -t $LATEST_IMAGE_NAME .
+
+          # Push the tagged image
           jf docker push $IMAGE_NAME_WITH_TAG
+          jf docker push $LATEST_IMAGE_NAME
           
       - name: Publish Build info With JFrog CLI
         env:
           # Generated and maintained by GitHub
           JFROG_CLI_BUILD_NAME: jfrog-docker-build-stage
           # JFrog organization secret
-          JFROG_CLI_BUILD_NUMBER : ${{ github.run_number }}
+          JFROG_CLI_BUILD_NUMBER: ${{ github.run_number }}
         run: |
-          # Export the build name and build nuber
+          # Export the build name and build number
           # Collect environment variables for the build
           jf rt build-collect-env
           # Collect VCS details from git and add them to the build
           jf rt build-add-git
           # Publish build info
-          jf rt build-publish       
+          jf rt build-publish

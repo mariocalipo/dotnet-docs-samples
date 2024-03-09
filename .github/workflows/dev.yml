@@ -39,17 +39,10 @@ jobs:
           
           # Build and tag the Docker image
           jf docker build -t $IMAGE_NAME_WITH_TAG .
-          
+          jf docker build -t $LATEST_IMAGE_NAME .
+
           # Push the tagged image
           jf docker push $IMAGE_NAME_WITH_TAG
-          
-          # Delete the existing 'latest' tag (assuming the image already exists)
-          jf rt delete $LATEST_IMAGE_NAME --quiet
-          
-          # Tag the Docker image with 'latest'
-          jf docker tag $IMAGE_NAME_WITH_TAG $LATEST_IMAGE_NAME
-
-          # Push the 'latest' tag
           jf docker push $LATEST_IMAGE_NAME
           
       - name: Publish Build info With JFrog CLI
