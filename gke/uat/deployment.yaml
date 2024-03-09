@@ -60,6 +60,8 @@ spec:
       labels:
         app: uatapp
     spec:
+      imagePullSecrets:  # Add this section for image pull secrets
+      - name: regcred
       containers:
       - name: uatapp
         image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-uat:latest
