@@ -60,6 +60,8 @@ spec:
       labels:
         app: stageapp
     spec:
+      imagePullSecrets:  # Add this section for image pull secrets
+      - name: regcred
       containers:
       - name: stageapp
         image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-stage:latest
