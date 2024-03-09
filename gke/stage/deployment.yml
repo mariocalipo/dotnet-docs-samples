@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stage-app
+  labels:
+    app: stage-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stage-app
+  template:
+    metadata:
+      labels:
+        app: stage-app
+    spec:
+      containers:
+      - name: stage-app
+        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-stage:latest 
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
