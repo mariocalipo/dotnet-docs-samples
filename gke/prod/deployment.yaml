@@ -60,6 +60,8 @@ spec:
       labels:
         app: prodapp
     spec:
+      imagePullSecrets:  # Add this section for image pull secrets
+      - name: regcred
       containers:
       - name: prodapp
         image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-prod:latest
