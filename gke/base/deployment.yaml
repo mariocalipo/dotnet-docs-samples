@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${ENVIRONMENT}app
+  name: ${ARGOCD_APP_NAMESPACE}app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ${ENVIRONMENT}app
+      app: ${ARGOCD_APP_NAMESPACE}app
   template:
     metadata:
       labels:
-        app: ${ENVIRONMENT}app
+        app: ${ARGOCD_APP_NAMESPACE}app
     spec:
       imagePullSecrets:  # Add this section for image pull secrets
       - name: regcred
       containers:
-      - name: ${ENVIRONMENT}app
-        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-${ENVIRONMENT}:latest
+      - name: ${ARGOCD_APP_NAMESPACE}app
+        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-${ARGOCD_APP_NAMESPACE}:latest
         ports:
           - containerPort: 8080
         livenessProbe:      # Used by deployment controller

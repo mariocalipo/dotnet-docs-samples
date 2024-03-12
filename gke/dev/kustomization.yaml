@@ -3,8 +3,3 @@ kind: Kustomization
 
 bases:
   - ../base
-
-configMapGenerator:
-  - name: environment-vars
-    literals:
-      - ENVIRONMENT=dev
