@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${ENVIRONMENT}app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ${ENVIRONMENT}app
+  template:
+    metadata:
+      labels:
+        app: ${ENVIRONMENT}app
+    spec:
+      imagePullSecrets:  # Add this section for image pull secrets
+      - name: regcred
+      containers:
+      - name: ${ENVIRONMENT}app
+        image: mariocalipo.jfrog.io/mariocalipo-docker-local/image-${ENVIRONMENT}:latest
+        ports:
+          - containerPort: 8080
+        livenessProbe:      # Used by deployment controller
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:     # Used by Ingress/GCLB
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        resources:
+          limits:
+            memory: 1024Mi
+          requests:
+            memory: 256Mi
