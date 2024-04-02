@@ -30,7 +30,7 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_SHA_SHORT: ${{ github.sha }}
-          IMAGE_NAME: mariocalipo.jfrog.io/mariocalipo-docker/image-uat
+          IMAGE_NAME: mariocalipo2.jfrog.io/jh-docker-local/image-uat
         run: |
           cd netcore
           TAG="${PR_NUMBER}"
