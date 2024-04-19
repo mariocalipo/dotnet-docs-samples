@@ -24,13 +24,13 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v3
         env:
           JF_URL: ${{ secrets.JF_URL }}
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN_ADMIN }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
   
       - name: Build and Push Docker Image
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_SHA_SHORT: ${{ github.sha }}
-          IMAGE_NAME: mariocalipo2.jfrog.io/jh-docker-local/image-stage
+          IMAGE_NAME: jhlvappmod.jfrog.io/mariocalipo-docker-local/image-stage
         run: |
           cd netcore
           TAG="${PR_NUMBER}"
